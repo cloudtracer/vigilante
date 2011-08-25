@@ -8,7 +8,7 @@ To install SnortJS, use [npm](http://github.com/isaacs/npm):
 
     $ npm install snortjs -g
     
-Opening the capture interface on most operating systems requires root access, so most of the time that you run a program using snortjs you'll need to use sudo.
+Opening the capture interface on most operating systems requires root access, make sure to sudo when running anything that uses SJS
 
 ## Examples
 
