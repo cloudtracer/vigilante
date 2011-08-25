@@ -1,0 +1,33 @@
+{
+   "name":"snortjs",
+   "description":"SnortJS is a server security framework for NodeJS that works with existing Snort rules",
+   "version":"0.0.1",
+   "homepage":"http://github.com/Contra/snortjs",
+   "repository":"git://github.com/Contra/snortjs.git",
+   "author":"Contra <contra@australia.edu> (http://wearefractal.com/)",
+   "main":"./lib/main.coffee",
+   "preferGlobal":"true",
+   "bin":{
+      "snortjs":"bin/cli.js"
+   },
+   "dependencies":{
+      "coffee-script":"*",
+      "pcap":"*",
+      "colors":"*",
+      "get":"*"
+   },
+   "devDependencies":{
+      "expresso":"0.7.x",
+      "should":"0.0.x",
+      "assertvanish":"0.0.x"
+   },
+   "engines":{
+      "node":">= 0.4.0"
+   },
+   "licenses":[
+      {
+         "type":"MIT",
+         "url":"http://github.com/Contra/snortjs/raw/master/LICENSE"
+      }
+   ]
+}
