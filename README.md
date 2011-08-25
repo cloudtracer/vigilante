@@ -1,9 +1,11 @@
 **SnortJS is a server security framework for NodeJS that works with existing Snort rules**
 
 SnortJS requires libpcap to be installed.
+
     $ sudo apt-get install libpcap-dev
     
 To install SnortJS, use [npm](http://github.com/isaacs/npm):
+
     $ npm install snortjs -g
     
 Opening the capture interface on most operating systems requires root access, so most of the time that you run a program using snortjs you'll need to use sudo.
