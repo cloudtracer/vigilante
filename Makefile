@@ -4,6 +4,7 @@ ALL_TESTS = $(shell find test/ -name '*.test.js')
 run-tests:
 	@./node_modules/.bin/expresso \
 		-t 3000 \
+		-I bin \
 		-I lib \
 		--serial \
 		$(TESTFLAGS) \
