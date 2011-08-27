@@ -26,7 +26,13 @@ exports.parse = (name, raw) ->
     for val in opts
       if val.length <= 0 or !val
         continue
+          
       temp = val.trim().split ':'
+      
+      #If the object is just a single word argument, give it a shim value for the sake of standards
+      if temp.length is 1
+        temp.push 'true'
+          
       obj = {}
       obj[temp[0]] = temp[1]
       fopts.push obj
