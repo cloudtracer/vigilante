@@ -1,15 +1,17 @@
 local = '[192.168.0.0/16,10.0.0.0/8,172.16.0.0/12]'
-any = '[0.0.0.0]'
+any = '[0.0.0.0/32]'
 
 module.exports =
+  #ipvar
   $HOME_NET: local
+  $NONE_NET: any
   $EXTERNAL_NET: any
   $HTTP_SERVERS: local
   $SMTP_SERVERS: local
   $SQL_SERVERS: local
   $DNS_SERVERS: local
   $TELNET_SERVERS: local
-  $AIM_SERVERS: any
+  $AIM_SERVERS: '[64.12.24.0/23,64.12.28.0/23,64.12.161.0/24,64.12.163.0/24,64.12.200.0/24,205.188.3.0/24,205.188.5.0/24,205.188.7.0/24,205.188.9.0/24,205.188.153.0/24,205.188.179.0/24,205.188.248.0/24]'
   # These vars are required if you're using the Digitalbond Scada signatures in the scada.rules category
   $DNP3_SERVER: local
   $DNP3_CLIENT: local
@@ -17,8 +19,11 @@ module.exports =
   $MODBUS_SERVER: local
   $ENIP_CLIENT: local
   $ENIP_SERVER: local
-  $HTTP_PORTS: '80'
+  #portvar
+  $HTTP_PORTS: '[80,81,311,591,593,901,1220,1414,1830,2301,2381,2809,3128,3702,4343,5250,7001,7145,7510,7777,7779,8000,8008,8014,8028,8080,8088,8118,8123,8180,8181,8243,8280,8800,8888,8899,9080,9090,9091,9443,9999,11371,55555]'
   $SHELLCODE_PORTS: '!80'
-  $ORACLE_PORTS: '1521'
+  $ORACLE_PORTS: '1024'
   $SSH_PORTS: '22'
+  $FTP_PORTS: '[21,2100,3535]'
+  $SIP_PORTS: '[5060,5061,5600]'
   $DNP3_PORTS: '20000'
