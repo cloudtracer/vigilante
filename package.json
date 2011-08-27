@@ -1,14 +1,14 @@
 {
-   "name":"snortjs",
-   "description":"SnortJS is a server security framework for NodeJS that works with existing Snort rules",
-   "version":"0.0.1",
-   "homepage":"http://github.com/Contra/snortjs",
-   "repository":"git://github.com/Contra/snortjs.git",
+   "name":"protege",
+   "description":"Protege is an intrusion detection system (IDS) written in NodeJS",
+   "version":"0.0.2",
+   "homepage":"http://github.com/Contra/protege",
+   "repository":"git://github.com/Contra/protege.git",
    "author":"Contra <contra@australia.edu> (http://wearefractal.com/)",
    "main":"./lib/main.coffee",
    "preferGlobal":"true",
    "bin":{
-      "snortjs":"bin/cli.js"
+      "protege":"bin/cli.js"
    },
    "dependencies":{
       "coffee-script":"*",
@@ -27,7 +27,7 @@
    "licenses":[
       {
          "type":"MIT",
-         "url":"http://github.com/Contra/snortjs/raw/master/LICENSE"
+         "url":"http://github.com/Contra/protege/raw/master/LICENSE"
       }
    ]
 }

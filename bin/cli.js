@@ -3,40 +3,41 @@
 /**
  * Module dependencies.
  */
-require('coffee-script'); //This shouldn't make a difference but we may want to load .coffee files later?
-var snortjs = require('snortjs');
-var log = snortjs.logger;
+ 
+require('coffee-script'); //This shouldn't make a difference but we may want to load .coffee files... maybe?
+var protege = require('protege');
+var log = protege.logger;
 var arguments = process.argv.splice(2);
 var arg = arguments[0];
 var items = arguments.splice(1);
 
 switch (arg) {
 case 'install':
-  snortjs.rules.install(items);
+  protege.rules.install(items);
   break;
 
 case 'update':
-  snortjs.rules.update()
+  protege.rules.update()
   break;
 
 case 'remove':
-  snortjs.rules.remove(items);
+  protege.rules.remove(items);
   break;
 
 case 'wipe':
-  snortjs.rules.wipe();
+  protege.rules.wipe();
   break;
 
 case 'clean':
-  snortjs.rules.clean();
+  protege.rules.clean();
   break;
   
 case 'listen':
-  snortjs.listener.listen(items);
+  protege.listener.listen(items);
   break;
   
 case 'version':
-  snortjs.info(snortjs.package.version);
+  protege.info(protege.package.version);
   break;
 
 default:

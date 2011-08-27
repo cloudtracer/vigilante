@@ -3,7 +3,7 @@ path = require 'path'
 rules = require './rules'
 log = require './logger'
 
-# Compatibility settings - commented out for now
+# Compatibility settings - unused for now
 protocols = ['ip', 'tcp', 'udp']
 
 # Standard snort rule format: action proto src_ip src_port direction dst_ip dst_port (options)
@@ -33,7 +33,7 @@ exports.parse = (name, raw) ->
     
     out.rules.push {action: splits[0], protocol: splits[1], src_ip: splits[2], src_port: splits[3], dst_ip: splits[5], dst_port: splits[6], options: fopts}
     # log.debug fopts
-  fs.writeFileSync rules.location + name + '.srs', JSON.stringify(out)
+  fs.writeFileSync rules.location + name + '.prf', JSON.stringify(out)
   log.debug name + ' parser statistics: '
   log.debug out.rules.length + ' rules left after ' + (lines.length - out.rules.length) + ' invalid rules were removed'
     

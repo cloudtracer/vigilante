@@ -5,10 +5,10 @@ log = require './logger'
 parser = require './parser'
 
 ruleDir = path.join(__dirname, 'rules/')
-ruleServer = 'http://cvs.snort.org/viewcvs.cgi/*checkout*/snort/rules/'
+snortCVS = 'http://cvs.snort.org/viewcvs.cgi/*checkout*/snort/rules/'
     
 addRule = (rule) ->
-  dl = new get({uri: ruleServer + rule + '.rules'})
+  dl = new get({uri: snortCVS + rule + '.rules'})
   dl.asString (error, result) ->
     if error
       log.error 'Failed to download ' + rule + '.rules!'
@@ -21,7 +21,7 @@ addRule = (rule) ->
       parser.parse rule, result
 
 deleteRule = (rule) ->
-  location = ruleDir + rule + '.srs'
+  location = ruleDir + rule + '.prf'
   fs.unlinkSync location
   log.info rule + ' deleted'
     
@@ -44,7 +44,7 @@ exports.clean = ->
   log.info 'Cleaning rules folder'
   files = fs.readdirSync ruleDir
   for file in files
-    if file.indexOf('.srs') < 0
+    if file.indexOf('.prf') < 0
       fs.unlinkSync ruleDir + file
       log.info 'Cleaned out ' + file
     

@@ -1,18 +1,29 @@
-**SnortJS is a server security framework for NodeJS that works with existing Snort rules**
+**Protege is an open source intrusion detection system (IDS) written in NodeJS. Protege aims to be compatible with existing Snort and mod_security rules**
 
-SnortJS requires libpcap to be installed.
+
+## Installation
+
+Protege requires libpcap to be installed.
 
     $ sudo apt-get install libpcap-dev
     
-To install SnortJS, use [npm](http://github.com/isaacs/npm):
+To install Protege, use [npm](http://github.com/isaacs/npm):
 
-    $ npm install snortjs -g
+    $ npm install -g protege
     
 Opening the capture interface on most operating systems requires root access, make sure to sudo when running anything that uses SJS
 
+## Configuration
+
+TODO
+
+## Usage
+
+TODO
+
 ## Examples
 
-You can view examples in the [example folder.](https://github.com/Contra/snortjs/tree/master/examples)
+You can view examples in the [example folder.](https://github.com/Contra/protege/tree/master/examples)
 
 ## Contributors
 
