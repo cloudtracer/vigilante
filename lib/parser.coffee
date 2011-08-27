@@ -18,19 +18,20 @@ exports.parse = (name, raw) ->
   lines = raw.split '\n'
       
   for line in lines
-    
-    for term in vars
-      log.debug term
-      log.debug vars.groups[term]
-      line = line.replace(term, vars.groups[term]);
       
     splits = isValid line   
     if !splits
       continue
         
-    opts = splits[7...splits.length].join('')
-      
-    fopts = parseOptions opts
+    opts = splits[7...splits.length].join('') # 7-end is our options
+    splits = splits[0..6]; # Fuck the options, we dont need them anymore!
+    fopts = parseOptions opts # Run options through parser
+    
+    # Go through each value in our rule and see if it is an engine expression
+    # If so, replace it with the proper value
+    for val in splits
+      if vars.hasOwnProperty val
+        splits[splits.indexOf(val)] = vars[val]
     
     out.rules.push {action: splits[0], protocol: splits[1], src_ip: splits[2], src_port: splits[3], dst_ip: splits[5], dst_port: splits[6], options: fopts}
     # log.debug fopts
@@ -67,6 +68,10 @@ parseOptions = (opts) ->
     
     #If we lost the argument somewhere, fuck it    
     temp[1] ?= 'true'
+    
+    # If our options value is a term from engine variables, replace it with its proper value
+    if vars.hasOwnProperty temp[1]
+      temp[1] = vars[temp[1]]
       
     obj = {}
     obj[temp[0]] = temp[1]
