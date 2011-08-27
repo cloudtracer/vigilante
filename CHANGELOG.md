@@ -3,7 +3,7 @@
 ==================
 
   * Changed project name to Protege
-  * Fixes to snort rule parser
+  * Fixes and improvements to snort rule parser
   * Switched to a more current snort repository
   * Allow URL to install command in CLI
   * Https fallback in install
