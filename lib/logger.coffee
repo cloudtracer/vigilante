@@ -1,17 +1,18 @@
 require 'colors'
+pack = require('./package').load()
   
 module.exports =
   log: (str) ->
     console.log str
   
   debug: (str) ->
-    console.log '[' + 'Protege'.magenta, 'DEBUG'.white.inverse + ']', str	
+    console.log '[' + pack.name.magenta, '-', 'DEBUG'.green.inverse + ']', str	
       
   info: (str) ->
-    console.log '[' + 'Protege'.magenta, 'info'.white + ']', str
+    console.log '[' + pack.name.magenta, '-', 'info'.white + ']', str
       
   warn: (str) ->
-    console.log '[' + 'Protege'.magenta, 'warn'.yellow + ']', str
+    console.log '[' + pack.name.magenta, '-', 'warn'.yellow + ']', str
 
   error: (str) ->
-    console.log '[' + 'Protege'.magenta, 'ERROR'.red.inverse + ']', str
+    console.log '[' + pack.name.magenta, '-', 'ERROR'.red.inverse + ']', str

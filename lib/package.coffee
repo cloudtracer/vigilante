@@ -1,11 +1,11 @@
-exports.package = 'Unloaded'
+fs = require 'fs'
+path = require 'path'
 
 # Singleton for the contents of package.json
 exports.load = ->
-  if exports.package is 'Unloaded'
-    fs = require 'fs'
-    path = require 'path'
+  if !@package
     location = path.join(__dirname, '../', 'package.json')
-    return JSON.parse fs.readFileSync(location)
+    @package = JSON.parse fs.readFileSync(location)
+    return @package
   else
-    return exports.package
+    return @package

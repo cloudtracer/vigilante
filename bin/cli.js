@@ -37,11 +37,11 @@ case 'listen':
   break;
   
 case 'version':
-  protege.info(protege.package.version);
+  log.info(protege.package.version);
   break;
 
 default:
-  log.info('Please enter a valid command. Reference');
+  log.info('Please enter a valid command. Usage:');
   log.info('version -- Outputs version');
   log.info('install <items> -- Installs and parses rulesets from CVS');
   log.info('remove <items> -- Removes specified rulesets');

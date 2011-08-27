@@ -7,6 +7,7 @@
    "author":"Contra <contra@australia.edu> (http://wearefractal.com/)",
    "main":"./lib/main.coffee",
    "preferGlobal":"true",
+   
    "bin":{
       "protege":"bin/cli.js"
    },
@@ -17,9 +18,9 @@
       "get":"*"
    },
    "devDependencies":{
-      "expresso":"0.7.x",
-      "should":"0.0.x",
-      "assertvanish":"0.0.x"
+      "expresso":"*",
+      "should":"*",
+      "assertvanish":"*"
    },
    "engines":{
       "node":">= 0.4.0"
