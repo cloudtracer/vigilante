@@ -50,7 +50,7 @@ parseOptions = (opts) ->
   # get rid of any quotes, we dont need them bruv
   opts = opts.replace(/"/g, '').split ';'
   for val in opts
-    if val.length <= 1 or !val
+    if !val or val.length <= 1
       continue
               
     temp = val.trim().split ':'
