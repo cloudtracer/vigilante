@@ -8,7 +8,13 @@ ruleDir = path.join(__dirname, 'rules/')
 ruleServer = 'http://rules.emergingthreats.net/open-nogpl/snort-edge/rules/emerging-'
     
 addRule = (rule) ->
-  if rule.indexOf('http') > -1
+
+  if rule.indexOf('https://') > -1
+    log.warn 'HTTP URLS ONLY!'
+    log.warn 'Changing Https to Http and trying again...'
+    rule = rule.replace 'https', 'http'
+    
+  if rule.indexOf('http://') > -1
     ruleLoc = rule #They gave us a url to install, lets download it and parse it!
     rule = path.basename ruleLoc, '.rules'
   else
