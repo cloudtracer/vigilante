@@ -13,14 +13,17 @@ ignored_options = ['rev', 'reference', 'sid']
 # Load a file, strip out useless rules, 
 exports.parse = (name, raw) ->
   out = {rules: []}
+  
+  raw = stripComments raw
   lines = raw.split '\n'
       
   for line in lines
+    
     for term in vars
       log.debug term
       log.debug vars.groups[term]
       line = line.replace(term, vars.groups[term]);
-    
+      
     splits = isValid line   
     if !splits
       continue
@@ -71,20 +74,30 @@ parseOptions = (opts) ->
       
   return fopts
         
+# Removes any lines containing a hash character, pretty simple
+stripComments = (raw) ->
+  lines = raw.split '\n'
+  for line in lines
+    if !line
+      continue
+    if line.indexOf('#') > -1 
+      lines.splice lines.indexOf(line), 1
+  return lines.join '\n'
+    
 # Remove any rules that arent usable
-isValid = (contents) ->
-  splits = contents.split ' '
+isValid = (line) ->
+  splits = line.split ' '
   
-  if contents is ''
+  if !line
     return false
-      
-  if contents.length < 1
+  else if line.length <= 1
     return false
-  else if contents.indexOf('#') >= 0
+  else if line.indexOf('#') > -1
     return false
   else if splits[4] isnt '->'
     return false
   else if !(splits[1] in protocols)
     return false
+      
   else
     return splits
