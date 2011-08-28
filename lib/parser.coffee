@@ -14,7 +14,6 @@ ignored_options = ['rev', 'reference', 'sid', 'flow', 'fast_pattern', 'classtype
 exports.parse = (name, raw) ->
   out = {rules: []}
   
-  raw = stripComments raw
   lines = raw.split '\n'
       
   for line in lines
@@ -25,7 +24,9 @@ exports.parse = (name, raw) ->
         
     opts = splits[7...splits.length].join('') # 7-end is our options
     splits = splits[0..6]; # Fuck the options, we dont need them anymore!
+    
     fopts = parseOptions opts # Run options through parser
+    fopts = formatOptions fopts # Run options through formatter so we get fancy PRF output
     
     # Go through each value in our rule and see if it is an engine expression
     # If so, replace it with the proper value
@@ -45,7 +46,27 @@ exports.parse = (name, raw) ->
   log.debug name + ' was parsed and installed!'
   log.debug out.rules.length + ' rules left after ' + (lines.length - out.rules.length) + ' invalid rules were removed'
   log.debug 'file was written to ' + path.normalize(rules.location + name + '.prf')
-    
+ 
+# Formats options into PRF format
+formatOptions = (opts) ->
+  # replaces any shitty shit with better shitty shit
+  for opt in opts
+    if !opt
+      continue
+       
+    if opt.content?
+      if opts[_i+1]? and opts[_i+1].nocase?
+        opts.splice _i+1, 1
+        opts.splice _i, 1, {containsIgnoreCase: opt.content}
+        log.debug 'removed nocase on ' + (_i+1)
+      else
+        opts.splice _i, 1, {contains: opt.content}
+      
+    if opt.pcre?
+      opts.splice _i, 1, {pattern: opt.pcre}
+          
+  return opts
+        
 # Parses and filters options
 parseOptions = (opts) ->
   fopts = []
@@ -68,32 +89,18 @@ parseOptions = (opts) ->
     if temp[0] in ignored_options
       continue
     
-    #If the object is just a single word argument, give it a shim value for the sake of standards
-    if !temp[1]
-      temp.push 'true'
-    
     #If we lost the argument somewhere, fuck it    
     temp[1] ?= 'true'
     
     # If our options value is a term from engine variables, replace it with its proper value
-    if vars.hasOwnProperty temp[1]
-      temp[1] = vars[temp[1]]
+    # if vars.hasOwnProperty temp[1]
+    #  temp[1] = vars[temp[1]]
       
     obj = {}
     obj[temp[0]] = temp[1]
     fopts.push obj
       
   return fopts
-        
-# Removes any lines containing a hash character, pretty simple
-stripComments = (raw) ->
-  lines = raw.split '\n'
-  for line in lines
-    if !line
-      continue
-    if line.indexOf('#') > -1 
-      lines.splice lines.indexOf(line), 1
-  return lines.join '\n'
     
 # Remove any rules that arent usable
 isValid = (line) ->
