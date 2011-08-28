@@ -1,9 +1,16 @@
 pcap = require 'pcap'
+log = require '../logger'
 
 exports.getTracker = ->
 
   tracker = new pcap.TCP_tracker()
   
+  tracker.on 'start', (session) ->
+    log.debug 'Start of TCP session between ' + session.src_name + ' and ' + session.dst_name
+
+  tracker.on 'end', (session) ->
+    log.debug 'End of TCP session between ' + session.src_name + ' and ' + session.dst_name
+    
   tracker.on 'websocket message', (session, dir, message) ->
     if dir is 'send' # we only want to catch incoming stoof
       obj = JSON.parse message
