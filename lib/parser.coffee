@@ -53,17 +53,29 @@ formatOptions = (opts) ->
   for opt in opts
     if !opt
       continue
-       
+        
+    # replace content with contains and condense following params into one
     if opt.content?
-      if opts[_i+1]? and opts[_i+1].nocase?
-        opts.splice _i+1, 1
-        opts.splice _i, 1, {containsIgnoreCase: opt.content}
-        log.debug 'removed nocase on ' + (_i+1)
+      if opts[_i+1]? and opts[_i+1].nocase? # if content is followed by nocase...
+        if opts[_i+2]? and opts[_i+2].http_uri? # if that nocase is followed by an http_uri
+          opts.splice _i+1, 2 # remove the nocase and http_uri
+          opts.splice _i, 1, {uri_containsIgnoreCase: opt.content} # replace content
+        else
+          opts.splice _i+1, 1 # remove the nocase
+          opts.splice _i, 1, {containsIgnoreCase: opt.content} # replace content
+          
       else
-        opts.splice _i, 1, {contains: opt.content}
+        if opts[_i+1]? and opts[_i+1].http_uri? # if content is followed by an http_uri
+          opts.splice _i+1, 1 # remove the http_uri
+          opts.splice _i, 1, {uri_contains: opt.content} # replace content
+        else
+          opts.splice _i, 1, {contains: opt.content} # replace content
       
     if opt.pcre?
       opts.splice _i, 1, {pattern: opt.pcre}
+      
+    if opt.msg?
+      opts.splice _i, 1, {message: opt.msg}
           
   return opts
         
