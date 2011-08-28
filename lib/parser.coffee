@@ -6,7 +6,7 @@ vars = require './engine/variables'
 
 # Compatibility settings
 protocols = ['ip', 'tcp']
-ignored_options = ['rev', 'reference', 'sid']
+ignored_options = ['rev', 'reference', 'sid', 'flow', 'fast_pattern', 'classtype']
 
 # Standard snort rule format: action proto src_ip src_port direction dst_ip dst_port (options)
 # Example: alert ip $EXTERNAL_NET $SHELLCODE_PORTS -> $HOME_NET any (msg:"SHELLCODE x86 setgid 0"; content:"|B0 B5 CD 80|"; reference:arachnids,284; classtype:system-call-detect; sid:649; rev:8;)
@@ -29,13 +29,19 @@ exports.parse = (name, raw) ->
     
     # Go through each value in our rule and see if it is an engine expression
     # If so, replace it with the proper value
+    ###
     for val in splits
       if vars.hasOwnProperty val
         splits[splits.indexOf(val)] = vars[val]
-    
-    out.rules.push {action: splits[0], protocol: splits[1], src_ip: splits[2], src_port: splits[3], dst_ip: splits[5], dst_port: splits[6], options: fopts}
+    ###
+          
+    # Commented out for now, we don't give a shit about the action because this isnt an IPS so its only going to alert anyways bruh
+    # TODO: Write a system that takes 'action' into consideration and uses iptables to blacklist if the action is drop or whatever
+    # out.rules.push {action: splits[0], protocol: splits[1], src_ip: splits[2], src_port: splits[3], dst_ip: splits[5], dst_port: splits[6], options: fopts}
+      
+    out.rules.push {protocol: splits[1], src_ip: splits[2], src_port: splits[3], dst_ip: splits[5], dst_port: splits[6], options: fopts}
     # log.debug fopts
-  fs.writeFileSync path.normalize(rules.location + name + '.prf'), JSON.stringify(out)
+  fs.writeFileSync path.normalize(rules.location + name + '.prf'), JSON.stringify(out, null, 2)
   log.debug name + ' was parsed and installed!'
   log.debug out.rules.length + ' rules left after ' + (lines.length - out.rules.length) + ' invalid rules were removed'
   log.debug 'file was written to ' + path.normalize(rules.location + name + '.prf')
