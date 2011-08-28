@@ -9,9 +9,9 @@ Protege requires libpcap to be installed.
     
 To install Protege, use [npm](http://github.com/isaacs/npm):
 
-    $ npm install -g protege
+    $ npm install -g protege --unsafe
     
-Opening the capture interface on most operating systems requires root access, make sure to sudo when running anything that uses SJS
+Opening the capture interface on most operating systems requires root access, make sure to install/run Protege on a user with the right privs!
 
 ## Configuration
 

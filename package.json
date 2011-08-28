@@ -15,7 +15,8 @@
       "coffee-script":"*",
       "pcap":"*",
       "colors":"*",
-      "get":"*"
+      "get":"*",
+      "iptables":"*"
    },
    "devDependencies":{
       "expresso":"*",

@@ -5,7 +5,7 @@ log = require './logger'
 vars = require './engine/variables'
 
 # Compatibility settings
-protocols = ['ip', 'tcp', 'udp']
+protocols = ['ip', 'tcp']
 ignored_options = ['rev', 'reference', 'sid']
 
 # Standard snort rule format: action proto src_ip src_port direction dst_ip dst_port (options)
