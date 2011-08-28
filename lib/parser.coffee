@@ -6,7 +6,7 @@ vars = require './engine/variables'
 
 # Compatibility settings
 protocols = ['ip', 'tcp']
-ignored_options = ['rev', 'reference', 'sid', 'flow', 'fast_pattern', 'classtype']
+ignored_options = ['rev', 'reference', 'sid', 'flow', 'fast_pattern', 'classtype', 'metadata', 'gid']
 
 # Standard snort rule format: action proto src_ip src_port direction dst_ip dst_port (options)
 # Example: alert ip $EXTERNAL_NET $SHELLCODE_PORTS -> $HOME_NET any (msg:"SHELLCODE x86 setgid 0"; content:"|B0 B5 CD 80|"; reference:arachnids,284; classtype:system-call-detect; sid:649; rev:8;)
@@ -49,33 +49,34 @@ exports.parse = (name, raw) ->
  
 # Formats options into PRF format
 formatOptions = (opts) ->
+  contentParams = ['nocase', 'http_uri', 'http_raw_uri', 'http_header', 'http_raw_header', 'http_cookie', 'http_raw_cookie', 'http_method', 'http_client_body', 'http_stat_code', 'http_stat_msg', 'file_data']
+  
+  toreplace = ['pcre', 'msg']
+  replacements = ['pattern', 'message']
+  
   # replaces any shitty shit with better shitty shit
   for opt in opts
     if !opt
       continue
-        
-    # replace content with contains and condense following params into one
-    if opt.content?
-      if opts[_i+1]? and opts[_i+1].nocase? # if content is followed by nocase...
-        if opts[_i+2]? and opts[_i+2].http_uri? # if that nocase is followed by an http_uri
-          opts.splice _i+1, 2 # remove the nocase and http_uri
-          opts.splice _i, 1, {uri_containsIgnoreCase: opt.content} # replace content
-        else
-          opts.splice _i+1, 1 # remove the nocase
-          opts.splice _i, 1, {containsIgnoreCase: opt.content} # replace content
+    
+    # condense all content arguments into one object
+    for val of opt
+      # replace any shitty keys with new shitty keys
+      if toreplace.indexOf(val) > -1
+        idx = toreplace.indexOf(val)
+        obj = {}
+        obj[replacements[idx]] = opt[val]
+        opts.splice _i, 1, obj
           
-      else
-        if opts[_i+1]? and opts[_i+1].http_uri? # if content is followed by an http_uri
-          opts.splice _i+1, 1 # remove the http_uri
-          opts.splice _i, 1, {uri_contains: opt.content} # replace content
-        else
-          opts.splice _i, 1, {contains: opt.content} # replace content
-      
-    if opt.pcre?
-      opts.splice _i, 1, {pattern: opt.pcre}
-      
-    if opt.msg?
-      opts.splice _i, 1, {message: opt.msg}
+      # condense all content arguments into one object
+      if val.indexOf('content') is 0
+        for param in contentParams
+          if opts[_i+1]? and opts[_i+1].hasOwnProperty param
+            opts.splice _i+1, 1 # remove the param
+            newName = val + '_' + param
+            obj = {}
+            obj[newName] = opt[val]
+            opts.splice _i, 1, obj # replace content    
           
   return opts
         
