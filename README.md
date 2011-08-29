@@ -1,17 +1,17 @@
-**Protege is an open source intrusion detection system (IDS) written in NodeJS. Protege aims to be compatible with existing Snort and mod_security rules**
+**Vigilante is an open source intrusion detection system (IDS) written in NodeJS. Protege aims to be compatible with existing Snort and mod_security rules**
 
 
 ## Installation
 
-Protege requires libpcap to be installed.
+Vigilante requires libpcap to be installed.
 
     $ sudo apt-get install libpcap-dev
     
-To install Protege, use [npm](http://github.com/isaacs/npm):
+To install Vigilante, use [npm](http://github.com/isaacs/npm):
 
-    $ npm install -g protege --unsafe
+    $ npm install -g vigilante --unsafe
     
-Opening the capture interface on most operating systems requires root access, make sure to install/run Protege on a user with the right privs!
+Opening the capture interface on most operating systems requires root access, make sure to install/run Vigilante on a user with the right privs!
 
 ## Configuration
 
@@ -23,7 +23,7 @@ TODO
 
 ## Examples
 
-You can view examples in the [example folder.](https://github.com/Contra/protege/tree/master/examples)
+You can view examples in the [example folder.](https://github.com/Contra/vigilante/tree/master/examples)
 
 ## Contributors
 

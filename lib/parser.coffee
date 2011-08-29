@@ -10,6 +10,20 @@ ignored_options = ['rev', 'reference', 'sid', 'flow', 'fast_pattern', 'classtype
 
 # Standard snort rule format: action proto src_ip src_port direction dst_ip dst_port (options)
 # Example: alert ip $EXTERNAL_NET $SHELLCODE_PORTS -> $HOME_NET any (msg:"SHELLCODE x86 setgid 0"; content:"|B0 B5 CD 80|"; reference:arachnids,284; classtype:system-call-detect; sid:649; rev:8;)
+###
+  
+alert ip $EXTERNAL_NET $SHELLCODE_PORTS -> $HOME_NET any (msg:"SHELLCODE x86 setgid 0"; content:"|B0 B5 CD 80|"; reference:arachnids,284; classtype:system-call-detect; sid:649; rev:8;)
+
+
+message: 'SHELLCODE x86 setgid 0'
+protocol: ip
+source: $EXTERNAL_NET,
+source_port: $SHELLCODE_PORTS
+destination: $HOME_NET
+destination_port": any
+parameters:
+     contains: '|B0 B5 CD 80|'
+###
 # Load a file, strip out useless rules, 
 exports.parse = (name, raw) ->
   out = {rules: []}

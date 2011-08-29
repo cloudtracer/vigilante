@@ -5,39 +5,39 @@
  */
  
 require('coffee-script'); //This shouldn't make a difference but we may want to load .coffee files... maybe?
-var protege = require('protege');
-var log = protege.logger;
+var vigilante = require('vigilante');
+var log = vigilante.logger;
 var arguments = process.argv.splice(2);
 var arg = arguments[0];
 var items = arguments.splice(1);
 
 switch (arg) {
 case 'install':
-  protege.rules.install(items);
+  vigilante.rules.install(items);
   break;
 
 case 'update':
-  protege.rules.update()
+  vigilante.rules.update()
   break;
 
 case 'remove':
-  protege.rules.remove(items);
+  vigilante.rules.remove(items);
   break;
 
 case 'wipe':
-  protege.rules.wipe();
+  vigilante.rules.wipe();
   break;
 
 case 'clean':
-  protege.rules.clean();
+  vigilante.rules.clean();
   break;
   
 case 'listen':
-  protege.listener.listen(items);
+  vigilante.listener.listen(items);
   break;
   
 case 'version':
-  log.info(protege.package.version);
+  log.info(vigilante.package.version);
   break;
 
 default:
