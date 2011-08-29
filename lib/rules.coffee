@@ -33,7 +33,7 @@ addRule = (rule) ->
       parser.parse rule, result
 
 deleteRule = (rule) ->
-  location = ruleDir + rule + '.prf'
+  location = ruleDir + rule + '.vrf'
   fs.unlinkSync location
   log.info rule + ' deleted'
     
@@ -56,7 +56,7 @@ exports.clean = ->
   log.info 'Cleaning rules folder'
   files = fs.readdirSync ruleDir
   for file in files
-    if path.extname(file) is '.prf'
+    if path.extname(file) is '.vrf'
       fs.unlinkSync ruleDir + file
       log.info 'Cleaned out ' + file
     
