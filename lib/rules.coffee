@@ -21,19 +21,18 @@ addRule = (rule) ->
   dl = new get({uri: ruleLoc})
   dl.asString (error, result) ->
     if error
-      log.error 'Failed to download',rule + config.snortext + '!'
+      log.error 'Failed to download' + rule + config.snortext + '!'
       log.error 'You either specified a non-existant file or the Snort CVS server is down'
       log.error 'Try again later or specify a valid ruleset'
       log.error result
       log.error error      
     else
-      log.info rule,' downloaded.'
+      # log.info rule + ' downloaded.'
       parser.parse rule, result
 
 deleteRule = (rule) ->
-  location = config.ruledir + rule + config.fileext
-  fs.unlinkSync location
-  log.info rule, 'deleted'
+  fs.unlinkSync config.ruledir + rule + config.fileext
+  log.info rule + 'deleted'
     
 exports.install = (rules) ->
   rules.forEach addRule
@@ -43,15 +42,13 @@ exports.remove = (rules) ->
       
 exports.wipe = ->
   log.info 'Emptying rules folder'
-  files = fs.readdirSync config.ruledir
-  for file in files
+  for file in fs.readdirSync config.ruledir
     fs.unlinkSync config.ruledir + file
-    log.info 'Cleaned out', file
+    log.info 'Cleaned out' + file
     
 exports.clean = ->
   log.info 'Cleaning rules folder'
-  files = fs.readdirSync config.ruledir
-  for file in files
+  for file in fs.readdirSync config.ruledir
     if path.extname(file) is config.fileext
       fs.unlinkSync config.ruledir + file
-      log.info 'Cleaned out',file
+      log.info 'Cleaned out' + file

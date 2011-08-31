@@ -30,9 +30,9 @@ exports.parse = (name, raw) ->
     out.rules.push {protocol: args[1], src_ip: args[2], src_port: args[3], dst_ip: args[5], dst_port: args[6], options: fixedOptions}
     
   fs.writeFileSync path.normalize(config.ruledir + name + config.ruleext), out.prettify()
-  log.info name,'was parsed and installed!'
-  log.info out.rules.length,'rules left after',lines.length - out.rules.length,'invalid rules were removed'
-  log.debug 'file was written to ' + path.normalize(config.ruledir + name + config.ruleext)
+  log.info name + ' was downloaded, parsed, and installed!'
+  log.info out.rules.length + ' rules left after '+ (lines.length - out.rules.length) + ' invalid rules were removed'
+  log.debug name + ' was written to ' + path.normalize(config.ruledir + name + config.ruleext)
  
 # Formats options into PRF format
 formatOptions = (opts) ->
@@ -46,14 +46,11 @@ formatOptions = (opts) ->
       for param in search_terms
           if opts[_i+1]? and opts[_i+1].hasOwnProperty param
             opts.removeIndex _i+1
-              
             newName = opt.getKey() + '_' + param
             obj = {}
             obj[newName] = opt.getValue()
-            
-            opts.replaceIndex _i, obj 
-            
-  return opts.unique(true)
+            opts.replaceIndex _i, obj          
+  return opts.unique true
         
 # Parses and filters options
 parseOptions = (opts) ->
