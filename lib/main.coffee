@@ -1,3 +1,5 @@
+require 'protege'
+  
 module.exports = 
   logger: require './logger'
   rules: require './rules'

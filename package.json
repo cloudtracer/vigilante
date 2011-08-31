@@ -16,6 +16,7 @@
       "pcap":"*",
       "colors":"*",
       "get":"*",
+      "protege":"*",
       "iptables":"*"
    },
    "devDependencies":{

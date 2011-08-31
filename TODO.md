@@ -11,5 +11,6 @@
 
 * Write mod_security parser that strips incompatible snort rules out and converts the rest to JSON
 * Separate rules by transport type (TCP, UDP, ICMP, etc.) and run separate pcap listeners for each type
+* Design redis ruleset manager/loader
 * Have one redis instance per transport type/pcap listener
 * DESIGN EFFICIENT PACKET MANAGER

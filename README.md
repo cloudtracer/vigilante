@@ -25,6 +25,34 @@ TODO
 
 You can view examples in the [example folder.](https://github.com/Contra/vigilante/tree/master/examples)
 
+## Vigilante Rule Format
+
+### VRF is fully compatible with all Snort expressions, just use the parser to convert any Snort rules to VRF
+
+Standard Snort rule format: ```action proto src_ip src_port direction dst_ip dst_port (options)```
+Example: ```alert ip $EXTERNAL_NET $SHELLCODE_PORTS -> $HOME_NET any (msg:"SHELLCODE x86 setgid 0"; content:"|B0 B5 CD 80|"; reference:arachnids,284; classtype:system-call-detect; sid:649; rev:8;)```
+
+Standard Vigilante rule format:
+```
+        message: 'attack details to display'
+        protocol: proto
+        source: 'ip range'
+        source_port: port_numbers
+        destination: 'ip range'
+        destination_port: port_numbers
+        parameters: any scan/search specifications
+Example: 
+```
+        message: 'SHELLCODE x86 setgid 0'
+        protocol: ip
+        source: $EXTERNAL_NET
+        source_port: $SHELLCODE_PORTS
+        destination: $HOME_NET
+        destination_port: any
+        parameters:
+             contains: '|B0 B5 CD 80|'
+```
+     
 ## Contributors
 
 - [Contra](https://github.com/Contra)
