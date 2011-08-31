@@ -1,6 +1,6 @@
 pcap = require 'pcap'
-log = require './logger'
-tcptran = require './transport/tcp'
+log = require '../logger'
+tcptran = require '../transport/tcp'
 
 exports.listen = (options) ->
 
