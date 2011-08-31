@@ -1,12 +1,12 @@
 fs = require 'fs'
 path = require 'path'
-rules = require './rules'
-log = require './logger'
-vars = require './engine/variables'
-config = require './config'
+rules = require '../rules'
+log = require '../logger'
+vars = require '../engine/variables'
+config = require '../config'
 
 # Compatibility settings
-engine_terms = require './engine/variables'
+engine_terms = require '../engine/variables'
 ignored_terms = ['rev', 'reference', 'sid', 'flow', 'fast_pattern', 'classtype', 'metadata', 'gid']
 search_terms = ['nocase', 'depth', 'distance', 'within', 'http_uri', 'http_raw_uri', 'http_header', 'http_raw_header', 'http_cookie', 'http_raw_cookie', 'http_method', 'http_client_body', 'http_stat_code', 'http_stat_msg', 'file_data']
 replacements = [['pcre', 'pattern'], ['msg', 'message']]

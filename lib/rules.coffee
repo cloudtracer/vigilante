@@ -2,7 +2,7 @@ fs = require 'fs'
 path = require 'path'
 get = require 'get'
 log = require './logger'
-parser = require './parser'
+snortParser = require './parsers/snort'
 config = require './config'
     
 addRule = (rule) ->
@@ -28,7 +28,7 @@ addRule = (rule) ->
       log.error error      
     else
       # log.info rule + ' downloaded.'
-      parser.parse rule, result
+      snortParser.parse rule, result
 
 deleteRule = (rule) ->
   fs.unlinkSync config.ruledir + rule + config.fileext
