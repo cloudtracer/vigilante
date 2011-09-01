@@ -14,21 +14,15 @@ replacements = [['pcre', 'pattern'], ['msg', 'message']]
 # Load a file, strip out useless rules, 
 exports.parse = (name, raw) ->
   out = {rules: []}
-  
-  lines = raw.split '\n'
-      
+  lines = raw.split '\n'   
   for line in lines
-    
     if !isValid line
       continue  
         
     args = line.split ' '
-        
     rawOptions = args[7...args.length].join('') # 7-end is our options
-    fixedOptions = condenseOptions condenseOptions formatOptions formatOptions formatOptions parseOptions rawOptions # Run options through parser, Run options through formatter so we get fancy PRF output
-    
-    out.rules.push {protocol: args[1], src_ip: args[2], src_port: args[3], dst_ip: args[5], dst_port: args[6], options: fixedOptions}
-    
+    fixedOptions = condenseOptions condenseOptions formatOptions formatOptions formatOptions parseOptions rawOptions
+    out.rules.push {protocol: args[1], src_ip: args[2], src_port: args[3], dst_ip: args[5], dst_port: args[6], options: fixedOptions} 
   log.info out.rules.length + ' rules left after '+ (lines.length - out.rules.length) + ' invalid rules were removed'
   return out
  
@@ -37,28 +31,21 @@ condenseOptions = (opts) ->
   for opt in opts
     unless opt? 
       continue
-    
     for sopt in opts
       unless sopt? 
         continue
-        
+
       if sopt isnt opt and sopt.getKey() is opt.getKey()
         obj = {}
-        
         if !Object.isArray opt.getValue()
           opt[opt.getKey()] = [opt.getValue()]
-          
         obj[opt.getKey()] = opt.getValue().concat sopt.getValue()
-          
         opts.replaceIndex _i, obj  
-        opts.removeIndex _j
-        
+        opts.removeIndex _j 
   return opts
     
 # Formats options into PRF format
 formatOptions = (opts) ->
-  
-  # replaces any shitty shit with better shitty shit
   for opt in opts
     unless opt? 
       continue
@@ -67,56 +54,38 @@ formatOptions = (opts) ->
       for param in search_terms
           if opts[_i+1]? and opts[_i+1].getKey().equalsIgnoreCase param
             newName = opt.getKey() + '_' + param 
-            
             if !Object.isEmpty opts[_i+1].getValue()
               newName += '-' + opts[_i+1].getValue()
-              
             obj = {}
             obj[newName] = opt.getValue()
             opts.replaceIndex _i, obj   
-            opts.removeIndex _i+1
-           
+            opts.removeIndex _i+1           
   return opts
         
 # Parses and filters options
 parseOptions = (line) ->
   fline = []
-  
-  # filter parenthesis from start and end of options
-  if line.startsWith '('
-    line = line.substring 1, line.length
-  
-  if line.endsWith ')'
-    line = line.substring 0, line.length-1
-  
-  # get rid of any quotes, we dont need them bruv
+  if line.startsWith '(' then line = line.substring 1, line.length
+  if line.endsWith ')' then line = line.substring 0, line.length-1
   line = line.replace(/"/g, '').split ';'
   for val in line
     if !val or val.length <= 1
       continue
               
     temp = val.trim().split ':'
-    
-    # temp[0] = name, temp[1] = value
-    
     if temp[0] in ignored_terms
       continue
-        
-    # If we lost the arg somewhere or it never had one, FUCK IT    
+          
     temp[1] ?= ''
     
     # run the option through replacements and see if it needs to go
     for rep in replacements
-      if temp[0].equalsIgnoreCase rep[0]
-        temp[0] = rep[1]
-        
-      if temp[1].equalsIgnoreCase rep[0]
-        temp[1] = rep[1]
+      if temp[0].equalsIgnoreCase rep[0] then temp[0] = rep[1] 
+      if temp[1].equalsIgnoreCase rep[0] then temp[1] = rep[1]
       
     obj = {}
     obj[decodeHTML(temp[0])] = decodeHTML(temp[1])
-    fline.push obj
-      
+    fline.push obj   
   return fline
 
 # Turns snort HTML encoding into standard encoding then unescapes it

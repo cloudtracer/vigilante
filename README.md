@@ -41,6 +41,7 @@ Standard Vigilante rule format:
         destination: 'ip range'
         destination_port: port_numbers
         parameters: any scan/search specifications
+```
 Example: 
 ```
         message: 'SHELLCODE x86 setgid 0'
