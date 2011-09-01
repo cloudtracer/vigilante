@@ -28,7 +28,9 @@ addRule = (rule) ->
       log.error error      
     else
       # log.info rule + ' downloaded.'
-      snortParser.parse rule, result
+      out = snortParser.parse rule, result
+      fs.writeFileSync path.normalize(config.ruledir + rule + config.ruleext), out.prettify()
+      log.info rule + ' was written to ' + path.normalize(config.ruledir + rule + config.ruleext)
 
 deleteRule = (rule) ->
   fs.unlinkSync config.ruledir + rule + config.fileext

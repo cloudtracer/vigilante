@@ -29,10 +29,8 @@ exports.parse = (name, raw) ->
     
     out.rules.push {protocol: args[1], src_ip: args[2], src_port: args[3], dst_ip: args[5], dst_port: args[6], options: fixedOptions}
     
-  fs.writeFileSync path.normalize(config.ruledir + name + config.ruleext), out.prettify()
-  log.info name + ' was downloaded, parsed, and installed!'
   log.info out.rules.length + ' rules left after '+ (lines.length - out.rules.length) + ' invalid rules were removed'
-  log.debug name + ' was written to ' + path.normalize(config.ruledir + name + config.ruleext)
+  return out
  
 # Makes the options smaller and easier to parse
 condenseOptions = (opts) ->
