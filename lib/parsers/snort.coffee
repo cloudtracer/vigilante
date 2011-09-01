@@ -38,27 +38,20 @@ condenseOptions = (opts) ->
     unless opt? 
       continue
     
-    #look ahead    
-    if opts[_i+1]? and opts[_i+1].getKey().equalsIgnoreCase opt.getKey()
-      obj = {}
-      if Object.isArray opt.getValue()
-        obj[opt.getKey()] = opt.getValue().concat opts[_i+1].getValue()
-      else
-        obj[opt.getKey()] = [opt.getValue(), opts[_i+1].getValue()]
+    for sopt in opts
+      unless sopt? 
+        continue
         
-      opts.replaceIndex _i, obj  
-      opts.removeIndex _i+1
-    
-    #look back    
-    if opts[_i-1]? and opts[_i-1].getKey().equalsIgnoreCase opt.getKey()
-      obj = {}
-      if Object.isArray opts[_i-1].getValue()
-        obj[opt.getKey()] = opts[_i-1].getValue().concat opt.getValue()
-      else
-        obj[opt.getKey()] = [opts[_i-1].getValue(), opt.getValue()]
+      if sopt isnt opt and sopt.getKey() is opt.getKey()
+        obj = {}
         
-      opts.replaceIndex _i-1, obj  
-      opts.removeIndex _i
+        if !Object.isArray opt.getValue()
+          opt[opt.getKey()] = [opt.getValue()]
+          
+        obj[opt.getKey()] = opt.getValue().concat sopt.getValue()
+          
+        opts.replaceIndex _i, obj  
+        opts.removeIndex _j
         
   return opts
     
