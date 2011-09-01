@@ -1,7 +1,7 @@
 {
    "name":"vigilante",
    "description":"Vigilante is an intrusion detection system (IDS) written in NodeJS",
-   "version":"0.0.3",
+   "version":"0.0.4",
    "homepage":"http://github.com/Contra/vigilante",
    "repository":"git://github.com/Contra/vigilante.git",
    "author":"Contra <contra@australia.edu> (http://wearefractal.com/)",
