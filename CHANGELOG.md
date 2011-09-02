@@ -1,3 +1,9 @@
+0.0.4 / September 1, 2011
+==================
+
+  * Massive improvements to... everything!
+  * Foundation for the rest of the program laid out
+
 0.0.3 / August 28, 2011
 ==================
 
