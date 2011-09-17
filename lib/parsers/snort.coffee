@@ -1,7 +1,7 @@
 fs = require 'fs'
 path = require 'path'
 rules = require '../rules'
-log = require '../logger'
+log = require 'node-log'
 vars = require '../engine/variables'
 config = require '../config'
 

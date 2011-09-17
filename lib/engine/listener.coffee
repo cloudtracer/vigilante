@@ -1,5 +1,5 @@
 pcap = require 'pcap'
-log = require '../logger'
+log = require 'node-log'
 tcptran = require './transports/tcp'
 
 exports.listen = (options) ->

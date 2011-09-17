@@ -6,7 +6,10 @@
  
 require('coffee-script'); //This shouldn't make a difference but we may want to load .coffee files... maybe?
 var vigilante = require('vigilante');
-var log = vigilante.logger;
+var log = require('node-log');
+log.setName('vigilante');
+var fs = require('fs');
+var path = require('path');
 var arguments = process.argv.splice(2);
 var arg = arguments[0];
 var items = arguments.splice(1);
@@ -37,7 +40,7 @@ case 'listen':
   break;
   
 case 'version':
-  log.info(vigilante.package.version);
+  log.info(JSON.parse(fs.readFileSync(path.join(__dirname, '../','package.json'))).version);
   break;
 
 default:

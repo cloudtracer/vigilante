@@ -1,7 +1,7 @@
 fs = require 'fs'
 path = require 'path'
 get = require 'get'
-log = require './logger'
+log = require 'node-log'
 snortParser = require './parsers/snort'
 config = require './config'
     

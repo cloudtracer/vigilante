@@ -14,10 +14,10 @@
    "dependencies":{
       "coffee-script":"*",
       "pcap":"*",
-      "colors":"*",
       "get":"*",
       "protege":"*",
-      "iptables":"*"
+      "iptables":"*",
+      "node-log":"*"
    },
    "devDependencies":{
       "expresso":"*",
