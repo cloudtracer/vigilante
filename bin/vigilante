@@ -5,7 +5,7 @@
  */
  
 require('coffee-script'); //This shouldn't make a difference but we may want to load .coffee files... maybe?
-var vigilante = require('vigilante');
+var vigilante = require('../lib/main');
 var log = require('node-log');
 log.setName('vigilante');
 var fs = require('fs');
@@ -14,29 +14,33 @@ var arguments = process.argv.splice(2);
 var arg = arguments[0];
 var items = arguments.splice(1);
 
+var completed = function () {
+    log.info('Operation completed.');
+};
+
 switch (arg) {
 case 'install':
-  vigilante.rules.install(items);
+  vigilante.rules.install(items, completed);
   break;
 
 case 'update':
-  vigilante.rules.update()
+  vigilante.rules.update(completed)
   break;
 
 case 'remove':
-  vigilante.rules.remove(items);
+  vigilante.rules.remove(items, completed);
   break;
 
 case 'wipe':
-  vigilante.rules.wipe();
+  vigilante.rules.wipe(completed);
   break;
 
 case 'clean':
-  vigilante.rules.clean();
+  vigilante.rules.clean(completed);
   break;
   
 case 'listen':
-  vigilante.listener.listen(items);
+  vigilante.listener.listen(items, completed);
   break;
   
 case 'version':

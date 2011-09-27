@@ -1,4 +1,5 @@
 fs = require 'fs'
+async = require 'async'
 path = require 'path'
 rules = require '../rules'
 log = require 'node-log'
@@ -10,21 +11,6 @@ engine_terms = require '../engine/variables'
 ignored_terms = ['rev', 'reference', 'sid', 'flow', 'fast_pattern', 'classtype', 'metadata', 'gid']
 search_terms = ['nocase', 'depth', 'distance', 'within', 'http_uri', 'http_raw_uri', 'http_header', 'http_raw_header', 'http_cookie', 'http_raw_cookie', 'http_method', 'http_client_body', 'http_stat_code', 'http_stat_msg', 'file_data']
 replacements = [['pcre', 'pattern'], ['msg', 'message']]
-  
-# Load a file, strip out useless rules, 
-exports.parse = (name, raw) ->
-  out = {rules: []}
-  lines = raw.split '\n'   
-  for line in lines
-    if !isValid line
-      continue  
-        
-    args = line.split ' '
-    rawOptions = args[7...args.length].join('') # 7-end is our options
-    fixedOptions = condenseOptions condenseOptions formatOptions formatOptions formatOptions parseOptions rawOptions
-    out.rules.push {protocol: args[1], src_ip: args[2], src_port: args[3], dst_ip: args[5], dst_port: args[6], options: fixedOptions} 
-  log.info out.rules.length + ' rules left after '+ (lines.length - out.rules.length) + ' invalid rules were removed'
-  return out
  
 # Makes the options smaller and easier to parse
 condenseOptions = (opts) ->
@@ -107,3 +93,20 @@ isValid = (line) ->
     return false    
   else
     return true
+        
+# Load a file, strip out useless rules, 
+module.exports =
+  parse: (name, raw, cb) ->
+    rules = []
+    parseIt = (line, call) ->
+      if !isValid line then return call()
+      args = line.split ' '
+      rawOptions = args[7...args.length].join('') # 7-to-end is our options
+      fixedOptions = condenseOptions condenseOptions formatOptions formatOptions formatOptions parseOptions rawOptions
+      rules.push {protocol: args[1], src_ip: args[2], src_port: args[3], dst_ip: args[5], dst_port: args[6], options: fixedOptions} 
+      return call()
+        
+    lines = raw.split '\n'   
+    async.forEach lines, parseIt, -> 
+      log.info rules.length + ' rules left after '+ (lines.length - rules.length) + ' invalid rules were removed'
+      return cb rules

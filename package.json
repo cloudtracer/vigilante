@@ -9,7 +9,7 @@
    "preferGlobal":"true",
    
    "bin":{
-      "vigilante":"bin/cli.js"
+      "vigilante":"bin/vigilante"
    },
    "dependencies":{
       "coffee-script":"*",
@@ -17,7 +17,8 @@
       "get":"*",
       "protege":"*",
       "iptables":"*",
-      "node-log":"*"
+      "node-log":"*",
+      "async":"*"
    },
    "devDependencies":{
       "expresso":"*",
